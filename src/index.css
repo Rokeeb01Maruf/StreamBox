@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme{
+    --color-primary: #8A2BE2;
+    --color-secondary: #00D1FF;
+    --color-tertiary: #935400;
+    --color-neutral: #050505;
+    --color-text-color: #CFC2D7;
+    --font-montserat: montserat;
+    --font-inter: inter;
+}
+
+@font-face {
+    font-family: inter;
+    src: url("/assets/fonts/inter.ttf");
+}
+
+@font-face {
+    font-family: montserat;
+    src: url("/assets/fonts/montserat.ttf");
+}
+
+#root{
+    z-index: -50;
+    overflow-x: hidden;
+}

@@ -9,11 +9,7 @@ const request = async(endpoint :string) =>{
         }
     })
     if(!response.ok){
-        return({
-            success : false,
-            message : "failed to load data",
-            status : response.status
-        })
+        throw new Error("failed to fetch data")
     }else{
         const data = await response.json()
         return data
@@ -36,6 +32,6 @@ export const getTopRatedMovies = () => {
     return request("/movie/top_rated")
 }
 
-export const getMovieGenres = () => {
-    return request("/genre/movie/list")
+export const getUpcomingMovies = () => {
+    return request("/movie/upcoming")
 }

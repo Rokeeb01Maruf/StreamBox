@@ -3,30 +3,30 @@ import {
     getTrendingMovies,
     getPopularMovies,
     getNowPlayingMovies,
-    getMovieGenres,
+    getUpcomingMovies,
     getTopRatedMovies
  } from "../api/api"
 
  
  const useHomeMovies = () => {
-    const [trending, setTrending] = useState([])
-    const [popular, setPopular] = useState([])
-    const [nowPlaying, setNowPlaying] = useState([])
-    const [topRated, setTopRated] = useState([])
-    const [movieGenres, setMovieGenres] = useState([])
+    const [trending, setTrending] = useState<[] | null>(null)
+    const [popular, setPopular] = useState<[] | null>(null)
+    const [nowPlaying, setNowPlaying] = useState<[] | null>(null)
+    const [topRated, setTopRated] = useState<[] | null>(null)
+    const [upcoming, setUpcoming] = useState<[] | null>(null)
     const [loading, setLoading] = useState({
         trending : true,
         popular : true,
         nowPlaying : true,
         topRated : true,
-        movieGenres : true
+        upcoming : true
     })
     const [error, setError] = useState({
         trending : false,
         popular : false,
         nowPlaying : false,
         topRated : false,
-        movieGenres : false
+        upcoming : false
     })
 
     useEffect(()=>{
@@ -51,10 +51,10 @@ import {
             .catch((err)=>setError(prev => ({...prev, topRated: true})))
             .finally(()=>setLoading(prev => ({...prev, topRated: false})))
 
-            getMovieGenres()
-            .then((data) => setMovieGenres(data.genres))
-            .catch((err)=>setError(prev => ({...prev, movieGenres: true})))
-            .finally(()=>setLoading(prev => ({...prev, movieGenres: false})))
+            getUpcomingMovies()
+            .then((data) => setUpcoming(data.results))
+            .catch((err)=>setError(prev => ({...prev, upcoming: true})))
+            .finally(()=>setLoading(prev => ({...prev, upcoming: false})))
         }
         fetchMovies()
     }, [])
@@ -64,7 +64,7 @@ import {
         popular,
         nowPlaying,
         topRated,
-        movieGenres,
+        upcoming,
         loading,
         error
     }
