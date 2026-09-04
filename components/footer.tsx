@@ -1,6 +1,6 @@
 export default function Footer(){
     return(
-        <footer className="bg-[#0E0E0E] w-full h-20 mt-5 px-25 shadow-sm shadow-gray-400 flex items-center justify-between">
+        <footer className="bg-[#0E0E0E] w-full h-20 px-25 shadow-sm shadow-gray-400 flex items-center justify-between">
             <section>
                 <img src="./assets/images/StreamBox.svg" width={64} alt="" />
             </section>

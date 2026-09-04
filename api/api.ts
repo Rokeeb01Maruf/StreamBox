@@ -35,3 +35,7 @@ export const getTopRatedMovies = () => {
 export const getUpcomingMovies = () => {
     return request("/movie/upcoming")
 }
+
+export const getMovieDetails = (id :number) => {
+    return request(`/movie/${id}`)
+}

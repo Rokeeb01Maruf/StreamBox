@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import HomePage from "./Home"
 import MovieDetails from "./MovieDetails"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Footer from "../../components/footer"
 
 function Home() {
   const [search, setSearch] = useState(false)
@@ -11,12 +12,12 @@ function Home() {
   return (
     <>
       <BrowserRouter>
-        <div className="relative min-h-screen font-montserat overflow-x-hidden w-screen bg-neutral items-center z-0 flex flex-col">
+        <div className="relative min-h-screen mb-[0.5px] pb-5 font-montserat overflow-x-hidden w-screen bg-neutral items-center z-0 flex flex-col">
           <header className="flex fixed w-full top-0 bg-[rgba(0,0,0,0.5)] z-1000 justify-between items-center h-17.5 px-25">
             <img src="/assets/images/StreamBox.svg" alt="StreamBox Logo" />
             <nav className="flex list-none items-center gap-x-10">
               <li className="cursor-pointer">
-                <a href="" className="text-text-color font-montserat">Home</a>
+                <a href="/" className="text-text-color font-montserat">Home</a>
               </li>
               <li className="cursor-pointer">
                 <a href="" className="text-text-color font-montserat">Discover</a>
@@ -36,12 +37,13 @@ function Home() {
               </li>
             </nav>
           </header>
+          <img src="/assets/images/hero-section.png" className="max-w-full absolute z-5 top-0 left-0 brightness-25" alt="" />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
           </Routes>
-
         </div>
+          <Footer />
       </BrowserRouter>
     </>
   )
