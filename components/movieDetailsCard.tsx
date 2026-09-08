@@ -100,7 +100,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                             </div>
                                             <div className="flex flex-col gap-y-1 pt-4 border-t border-text-color/20">
                                                 <p>AUDIO & SUBTITLES</p>
-                                                <p>
+                                                <p className="flex items-center gap-x-2">
                                                     {
                                                         data.movie.spoken_languages.map((e) => (
                                                             <p className="w-fit p-0.5 px-1.5 rounded-sm bg-gray-400/10">{e.name}</p>
