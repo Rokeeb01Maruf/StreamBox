@@ -39,3 +39,15 @@ export const getUpcomingMovies = () => {
 export const getMovieDetails = (id :number) => {
     return request(`/movie/${id}`)
 }
+
+export const getMovieCredits = (id: number) =>
+    request(`movie/${id}/credits`);
+
+export const getMovieVideos = (id: number) =>
+    request(`movie/${id}/videos`);
+
+export const getMovieRecommendations = (id: number) =>
+    request(`movie/${id}/recommendations`);
+
+export const getSimilarMovies = (id: number) =>
+    request(`movie/${id}/similar`);
