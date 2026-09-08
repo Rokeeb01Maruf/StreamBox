@@ -85,7 +85,7 @@ export interface MovieVideo {
 
 export interface MovieVideosType {
     id: number;
-    results: MovieVideosType[];
+    results: MovieVideo[];
 }
 
 export interface MovieListType {
