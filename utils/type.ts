@@ -102,3 +102,38 @@ export type MovieFullDetailsType = {
         recommendations: MovieListType | null,
         similar: MovieListType | null
     }
+
+export interface UserType {
+    id : string,
+    email : string,
+    nickname : string,
+    password: string
+}
+
+export interface userInputType {
+    email : string,
+    nickname : string,
+    password : string
+}
+
+export interface SignupType {
+    email : string,
+    emailValid : boolean | null
+    password: string,
+    passwordValid: boolean | null
+    confirm_password : string,
+    nickname: string
+    nicknameValid : boolean | null
+}
+
+export interface SigninType {
+    email : string,
+    emailValid : boolean | null,
+    password : string,
+    passwordValid : boolean | null
+}
+
+export interface SigninDetailType {
+    email : string,
+    password : string,
+}

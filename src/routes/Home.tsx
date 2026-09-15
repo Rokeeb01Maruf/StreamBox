@@ -1,6 +1,5 @@
 import MovieSectionSkeleton from "../../components/movieSectionSkeleton"
 import MovieSection from "../../components/movieSection"
-import Footer from "../../components/footer"
 import useHomeMovies from "../../hooks/useHomeMovies";
 export default function home() {
     const { trending, popular, nowPlaying, topRated, upcoming, loading, error } = useHomeMovies()
