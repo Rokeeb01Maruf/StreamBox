@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react"
 import HomePage from "./Home"
 import MovieDetails from "./MovieDetails"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Dashboard from "./Dashboard"
+import { getCurrentUser } from "../../repository/userRepository"
+import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
 import Footer from "../../components/footer"
-import { signUpUser, signInUser } from "../../repository/userRepository"
-import type { SigninType, SignupType } from "../../utils/type"
+import { signUpUser, signInUser, signOutUser } from "../../repository/userRepository"
+import type { SigninType, SignupType, userDataType } from "../../utils/type"
+import Discover from "./Discover";
 
 function Home() {
   const [search, setSearch] = useState(false)
+  const [query, setQuery] = useState("")
+  const [user, setUser] = useState<userDataType>()
   const [state, setState] = useState(0)
+  const [detail, setDetail] = useState(false)
   const [register, setRegister] = useState(false)
+  const [isAuth, setIsAuth] = useState(false)
   const [submit, setSubmit] = useState(false)
   const [authErr, setAuthErr] = useState(
     { signin: "", signup: "" }
@@ -31,6 +38,24 @@ function Home() {
   })
   useEffect(() => {
     document.title = "StreamBox"
+  }, [])
+
+  useEffect(() => {
+    const getSigninUser = async () => {
+      const isAuthenticated = await getCurrentUser()
+
+      if (isAuthenticated.success === false) {
+        setIsAuth(false)
+      } else if (isAuthenticated.success === true) {
+        if (!isAuthenticated.data || !isAuthenticated.data.email || !isAuthenticated.data.nickname || !isAuthenticated.data.id) {
+          setIsAuth(false)
+        } else {
+          setIsAuth(true)
+          setUser(isAuthenticated.data)
+        }
+      }
+    }
+    getSigninUser()
   }, [])
 
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -66,6 +91,10 @@ function Home() {
       setTimeout(() => {
         setAuthErr(prev => ({ ...prev, signin: "" }))
       }, 1000)
+    }else if (user.success === true) {
+      setIsAuth(true)
+      setState(0)
+      setUser(user.data)
     }
   }
 
@@ -89,9 +118,29 @@ function Home() {
       setTimeout(() => {
         setAuthErr(prev => ({ ...prev, signin: "" }))
       }, 1000)
+      setIsAuth(false)
+    } else if (user.success === true) {
+      setIsAuth(true)
+      setState(0)
+      setUser(user.data)
     }
-    console.log(user)
   }
+
+  const handleSignout = () => {
+    const isSignout = signOutUser()
+    if(isSignout){
+      window.location.reload()
+    }
+  }
+  
+  const handleSearch = async() => {
+    if (query) console.log(query)
+  }
+  useEffect(()=>{
+    if (!(query.length % 3)){
+      handleSearch()
+    }
+  },[query])
 
   return (
     <>
@@ -99,25 +148,49 @@ function Home() {
         <div className="relative min-h-screen mb-[0.5px] pb-5 font-montserat overflow-x-hidden w-screen bg-neutral items-center z-0 flex flex-col">
           <header className="flex fixed w-full top-0 bg-[rgba(0,0,0,0.5)] z-1000 justify-between items-center h-17.5 px-25">
             <img src="/assets/images/StreamBox.svg" alt="StreamBox Logo" />
+            {
+              detail && (
+                <div className="text-neutral flex flex-col text-xs gap-y-1 rounded-b-2xl absolute rounded-lg top-17.5 right-20 bg-text-color">
+                  <p className="mt-2.5 mx-2.5"><b>Nickname: </b> {user?.nickname}</p>
+                  <p className="mx-2.5"><b>Email: </b> {user?.email}</p>
+                  <button onClick={handleSignout} className="bg-primary cursor-pointer transition-all duration-300 text-white rounded-full py-1 hover:bg-primary/20">Signout</button>
+                </div>
+              )
+            }
+
             <nav className="flex list-none items-center gap-x-10">
               <li className="cursor-pointer">
                 <a href="/" className="text-text-color font-montserat">Home</a>
               </li>
               <li className="cursor-pointer">
-                <a href="" className="text-text-color font-montserat">Discover</a>
+                <Link to={"/discover"} className="text-text-color font-montserat">Discover</Link>
               </li>
               <li className="cursor-pointer">
-                <button onClick={() => setState(2)} className="text-text-color font-montserat">Signin</button>
+                {
+                  isAuth === false ? (
+                    <button onClick={() => setState(2)} className="text-text-color font-montserat">Signin</button>
+                  ) : (
+                    <Link className="text-text-color font-montserat" to={"/Dashboard"}>Dashboard</Link>
+                  )
+                }
               </li>
               <li className={`${search ? 'opacity-100' : 'opacity-0 cursor-default'} relative w-49`}>
-                <img src="/assets/icons/search.svg" className="absolute top-2 right-1.5" width={12} height={12} alt="" />
-                <input placeholder="Search..." className="border rounded-xl text-white placeholder:text-xs px-1 text-sm w-full border-text-color font-montserat" type="text" name="" id="search" />
+                <img onClick={handleSearch} src="/assets/icons/search.svg" className="absolute z-10000000 top-2 right-1.5" width={12} height={12} alt="" />
+                <input onChange={(e :React.ChangeEvent<HTMLInputElement>)=>{
+                  setQuery(e.target.value)
+                }} placeholder="Search..." className="border rounded-xl text-white placeholder:text-xs px-1 text-sm w-full border-text-color font-montserat" type="text" name="" id="search" />
               </li>
               <li className="cursor-pointer">
-                <img src="/assets/icons/search.svg" className="w-5 h-5" alt="" onClick={() => setSearch(!search)} />
+                <img src="/assets/icons/search.svg" className="w-5 h-5 " alt="" onClick={() => setSearch(!search)} />
               </li>
               <li>
-                <button onClick={() => setState(1)} className="text-text-color font-montserat">SignUp</button>
+                {
+                  isAuth === false ? (
+                    <button onClick={() => setState(1)} className="text-text-color font-montserat">SignUp</button>
+                  ) : (
+                    <button onClick={()=>setDetail(!detail)} className="bg-primary px-3 py-0.5 text-lg text-white font-bold font-inter rounded-full">{user?.nickname[0]}</button>
+                  )
+                }
               </li>
             </nav>
           </header>
@@ -246,6 +319,8 @@ function Home() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/discover" element={<Discover />} />
           </Routes>
         </div>
         <Footer />

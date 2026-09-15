@@ -137,3 +137,9 @@ export interface SigninDetailType {
     email : string,
     password : string,
 }
+
+export interface userDataType{
+    id : string,
+    email : string,
+    nickname: string
+}
