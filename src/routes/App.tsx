@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import HomePage from "./Home"
 import MovieDetails from "./MovieDetails"
-import Dashboard from "./Dashboard"
+import History from "./History"
 import { getCurrentUser } from "../../repository/userRepository"
 import { BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import Footer from "../../components/footer"
@@ -179,7 +179,7 @@ function Home() {
                   isAuth === false ? (
                     <button onClick={() => setState(2)} className="text-text-color font-montserat">Signin</button>
                   ) : (
-                    <Link className="text-text-color font-montserat" to={"/Dashboard"}>Profile</Link>
+                    <Link className="text-text-color font-montserat" to={"/history"}>Watch history</Link>
                   )
                 }
               </li>
@@ -336,7 +336,7 @@ function Home() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/history" element={<History />} />
             <Route path="/discover" element={<Discover />} />
           </Routes>
         </div>
