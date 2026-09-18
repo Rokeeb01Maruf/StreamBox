@@ -3,6 +3,7 @@ import { useState } from "react"
 import MovieCard from "./movieCard"
 export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType | null }) {
     const [vidMode, setVidMode] = useState(false)
+    console.log(data)
 
     const trailer = data?.videos?.results.find((video)=> video.type == "Trailer" && video.site == "YouTube")
     const trailerUrl = trailer ? `https://www.youtube.com/embed/${trailer.key}` : null
@@ -26,7 +27,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                         <h3 className="text-sm font-inter mt-2">{data.movie.title.toLocaleUpperCase()}</h3>
                                         <p className="flex gap-x-0.5 text-[8px]">
                                             <p>{data.movie.release_date.split("-")[0]} |</p>
-                                            <p>{data.movie.genres[0].name}/{data.movie.genres[1].name || ""} |</p>
+                                            <p>{data.movie.genres[0]?.name || ""}/{data.movie.genres[1]?.name || ""} |</p>
                                             <p>{data.movie.runtime} min |</p>
                                             <p className="flex text-tertiary items-center justify-between gap-x-1"><img width={10} height={12} src="/assets/icons/star.svg" alt="" />{data.movie.vote_count}</p>
                                         </p>
@@ -59,7 +60,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                         <p className="flex gap-x-2.5">
                                             {
                                                 data.movie.genres.map((e) => (
-                                                    <p className="text-white">{e.name}.</p>
+                                                    <p className="text-white" key={e.id}>{e.name}.</p>
                                                 ))
                                             }
                                         </p>
@@ -91,7 +92,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                             <div className="flex items-center gap-x-10">
                                                 <div className="flex flex-col gap-y-0.5">
                                                     <p>STUDIO</p>
-                                                    <p>{data.movie.production_companies[1].name || ""}</p>
+                                                    <p>{data.movie.production_companies[1]?.name || ""}</p>
                                                 </div>
                                                 <div className="flex flex-col gap-y-0.5">
                                                     <p>RELEASE DATE</p>
@@ -102,8 +103,8 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                                 <p>AUDIO & SUBTITLES</p>
                                                 <p className="flex items-center gap-x-2">
                                                     {
-                                                        data.movie.spoken_languages.map((e) => (
-                                                            <p className="w-fit p-0.5 px-1.5 rounded-sm bg-gray-400/10">{e.name}</p>
+                                                        data.movie.spoken_languages.map((e, index) => (
+                                                            <p key={index} className="w-fit p-0.5 px-1.5 rounded-sm bg-gray-400/10">{e.name}</p>
                                                         ))
                                                     }
                                                 </p>
@@ -118,7 +119,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                                     <div className="flex flex-wrap gap-5">
                                                         {
                                                             data.casts.cast.map((cast, index) => index < 10 &&
-                                                                <div className="flex flex-col font-inter text-sm text-text-color text-center">
+                                                                <div key={index} className="flex flex-col font-inter text-sm text-text-color text-center">
                                                                     <img className="rounded-full w-24 h-24" src={`https://image.tmdb.org/t/p/w200${cast.profile_path}`} alt="" />
                                                                     <p className="w-25">{cast.name}</p>
                                                                     <p>{cast.known_for_department}</p>

@@ -51,3 +51,19 @@ export const getMovieRecommendations = (id: number) =>
 
 export const getSimilarMovies = (id: number) =>
     request(`movie/${id}/similar`);
+
+export const searchMovies = (query: string, page = 1) => {
+    return request(`search/movie?query=${encodeURIComponent(query)}&page=${page}`);
+}
+
+export const discoverMovies = () => {
+    return request("discover/movie")
+}
+
+export const discoverGenreMovies = (id: number) => {
+    return request(`discover/movie?with_genres=${id}`)
+}
+
+export const getMovieGenres = () => {
+    return request("genre/movie/list");
+}

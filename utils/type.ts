@@ -143,3 +143,10 @@ export interface userDataType{
     email : string,
     nickname: string
 }
+
+export interface MovieSearchResponse {
+    page: number;
+    results: MovieDetailsType[];
+    total_pages: number;
+    total_results: number;
+}

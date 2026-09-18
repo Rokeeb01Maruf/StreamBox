@@ -3,11 +3,13 @@ import HomePage from "./Home"
 import MovieDetails from "./MovieDetails"
 import Dashboard from "./Dashboard"
 import { getCurrentUser } from "../../repository/userRepository"
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import Footer from "../../components/footer"
 import { signUpUser, signInUser, signOutUser } from "../../repository/userRepository"
-import type { SigninType, SignupType, userDataType } from "../../utils/type"
+import type { SigninType, SignupType, userDataType, MovieSearchResponse, MovieDetailsType } from "../../utils/type"
 import Discover from "./Discover";
+import { searchMovies } from "../../api/api"
+import ScrollToTop from "../../components/scrollToTop"
 
 function Home() {
   const [search, setSearch] = useState(false)
@@ -18,6 +20,7 @@ function Home() {
   const [register, setRegister] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
   const [submit, setSubmit] = useState(false)
+  const [data, setData] = useState<MovieDetailsType[] | null>()
   const [authErr, setAuthErr] = useState(
     { signin: "", signup: "" }
   )
@@ -134,10 +137,16 @@ function Home() {
   }
   
   const handleSearch = async() => {
-    if (query) console.log(query)
+    if (query.trim()){
+      const searches :MovieSearchResponse = await searchMovies(query)
+      const searchData = searches.results
+      setData(searchData)
+    }else{
+      setData(null)
+    }
   }
   useEffect(()=>{
-    if (!(query.length % 3)){
+    if (query.length >= 3){
       handleSearch()
     }
   },[query])
@@ -170,15 +179,22 @@ function Home() {
                   isAuth === false ? (
                     <button onClick={() => setState(2)} className="text-text-color font-montserat">Signin</button>
                   ) : (
-                    <Link className="text-text-color font-montserat" to={"/Dashboard"}>Dashboard</Link>
+                    <Link className="text-text-color font-montserat" to={"/Dashboard"}>Profile</Link>
                   )
                 }
               </li>
-              <li className={`${search ? 'opacity-100' : 'opacity-0 cursor-default'} relative w-49`}>
+              <li className={`${search ? 'opacity-100' : 'opacity-0 cursor-default'} h-5 ${data != null && "absolute" } relative w-49`}>
                 <img onClick={handleSearch} src="/assets/icons/search.svg" className="absolute z-10000000 top-2 right-1.5" width={12} height={12} alt="" />
                 <input onChange={(e :React.ChangeEvent<HTMLInputElement>)=>{
                   setQuery(e.target.value)
                 }} placeholder="Search..." className="border rounded-xl text-white placeholder:text-xs px-1 text-sm w-full border-text-color font-montserat" type="text" name="" id="search" />
+                <div className="flex scrollbar-track-text-color scrollbar-thumb-neutral flex-col gap-y-1.5 max-h-[80vh] overflow-y-scroll relative text-[12px] font-inter bottom-0 left-0 bg-text-color z-100000">
+                  {
+                    data && data.map((e, index)=>(
+                      <Link key={index} to={`/movie/${e.id}`}>{e.title}</Link>
+                    ))
+                  }
+                </div>
               </li>
               <li className="cursor-pointer">
                 <img src="/assets/icons/search.svg" className="w-5 h-5 " alt="" onClick={() => setSearch(!search)} />
@@ -316,6 +332,7 @@ function Home() {
               </div>
             )
           }
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
