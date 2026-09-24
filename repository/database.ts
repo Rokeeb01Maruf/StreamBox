@@ -9,13 +9,9 @@ class StreamBoxDatabase extends Dexie{
         super("StreamBox")
 
         this.version(1).stores({
-            users : "id, email"
-        })
-
-        this.version(2).stores({
-            users: "id",
+            users : "id, email",
             watchHistory: "id, userId, movieId"
-        });
+        })
     }
 
 }

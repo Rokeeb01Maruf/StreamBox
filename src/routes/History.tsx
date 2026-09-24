@@ -70,7 +70,7 @@ export default function Dashboard() {
                     </div>
                 ) : (
                     <>
-                        <div className="mt-17.5 text-white min-h-screen mx-25 flex flex-col gap-y-5">
+                        <div className="mt-17.5 text-white min-h-screen mx-25 max-[1177px]:mx-20 max-[1146px]:mx-15 max-[895px]:mx-10 flex flex-col gap-y-5">
                             {
                                 date.map((d) => (
                                     <div key={d}>

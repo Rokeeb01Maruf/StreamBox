@@ -25,7 +25,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                         {
                             data?.movie &&
                             <>
-                                <header className="flex font-inter gap-x-5 bg-[rgba(0,0,0,0.5)] rounded-lg p-30 pb-0">
+                                <header className="flex max-[667px]:flex-col max-[667px]:gap-y-5 font-inter gap-x-5 bg-[rgba(0,0,0,0.5)] rounded-lg p-30 pb-0 max-[1177px]:px-20 max-[1146px]:px-15 max-[895px]:px-10">
                                     <section className="p-5 shadow-sm shadow-gray-800 text-white text-left bg-neutral flex flex-col rounded-lg">
                                         <img src={`https://image.tmdb.org/t/p/w500${data.movie.poster_path}`} alt="" className="w-40 h-60 rounded-lg mx-auto" />
                                         <h3 className="text-sm font-inter mt-2">{data.movie.title.toLocaleUpperCase()}</h3>
@@ -68,7 +68,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                                 ))
                                             }
                                         </p>
-                                        <section className="text-white mt-2.5 flex items-center gap-x-5">
+                                        <section className="text-white mt-2.5 flex max-[435px]:gap-x-2.5 max-[413px]:gap-x-1 max-[401px]:flex-wrap max-[402px]:gap-y-1 items-center gap-x-5">
                                             <button onClick={handleVideo} className="flex gap-x-1.5 bg-primary hover:bg-purple-500 rounded-full px-4 py-2">
                                                 <img width={14} height={14} src="/assets/icons/play.svg" alt="play icon" />
                                                 <p>Watch Now</p>
@@ -82,13 +82,13 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                         </section>
                                     </section>
                                 </header>
-                                <main className="text-white px-30 mt-10">
-                                    <section className="flex">
-                                        <aside className="flex-3/4">
+                                <main className="text-white flex flex-col px-30 mt-10 max-[1177px]:px-20 max-[1146px]:px-15 max-[895px]:px-10">
+                                    <section className="flex max-[631px]:flex-col max-[631px]:gap-y-2 mb-2">
+                                        <aside className="flex-3/4 max-[873px]:flex-1/2">
                                             <h2 className="font-medium px-4 border-l-2 mb-4 border-primary">Synopsis</h2>
                                             <p className="text-sm font-light text-text-color font-inter">{data.movie.overview}</p>
                                         </aside>
-                                        <aside className="flex-1/4 flex flex-col gap-y-5 font-inter text-[10px] text-text-color bg-[#E5E2E1]/5 p-2.5 rounded-lg">
+                                        <aside className="flex-1/4 max-[873px]:flex-1/2 max-[631px]:w-[clamp(75%, 75%, 100%)] flex flex-col gap-y-5 font-inter text-[10px] text-text-color bg-[#E5E2E1]/5 p-2.5 rounded-lg">
                                             <div className="flex flex-col gap-y-0.5">
                                                 <p className="">COMPANY</p>
                                                 <p className="text-[9px]">{data.movie.production_companies[0].name}</p>
@@ -139,7 +139,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                         data.similar && (
                                             <section className="mt-5">
                                                 <h2 className="font-medium px-4 border-l-2 mb-4 border-primary">More Like This</h2>
-                                                <div className="card grid grid-cols-6 gap-x-5 gap-y-5">
+                                                <div className="card grid grid-cols-6 max-[1065px]:grid-cols-5 max-[901px]:grid-cols-4 max-[705px]:grid-cols-3 max-[705px]:justify-between max-[705px]:gap-y-0 max-[561px]:grid-cols-2 max-[373px]:grid-cols-1 gap-x-5 gap-y-5">
                                                     {
                                                         data.similar.results.map((datum, index) => (
                                                             index < 12 &&
@@ -154,7 +154,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                         data.recommendations && (
                                             <section className="mt-5">
                                                 <h2 className="font-medium px-4 border-l-2 mb-4 border-primary">Recommendations</h2>
-                                                <div className="card grid grid-cols-6 gap-x-5 gap-y-5">
+                                                <div className="card grid grid-cols-6 max-[1065px]:grid-cols-5 max-[901px]:grid-cols-4 max-[705px]:grid-cols-3 max-[705px]:justify-between max-[705px]:gap-y-0 max-[561px]:grid-cols-2 max-[373px]:grid-cols-1 gap-x-5 gap-y-5">
                                                     {
                                                         data.recommendations.results.map((datum, index) => (
                                                             index < 12 &&

@@ -21,7 +21,6 @@ function Home() {
   const [isAuth, setIsAuth] = useState(false)
   const [submit, setSubmit] = useState(false)
   const [nav, setNav] = useState(false)
-  // const [show, setShow] = useState(true)
   const [data, setData] = useState<MovieDetailsType[] | null>()
   const [authErr, setAuthErr] = useState(
     { signin: "", signup: "" }
@@ -94,7 +93,7 @@ function Home() {
     if (user.success === false) {
       setAuthErr(prev => ({ ...prev, signup: user.message }))
       setTimeout(() => {
-        setAuthErr(prev => ({ ...prev, signin: "" }))
+        setAuthErr(prev => ({ ...prev, signup: "" }))
       }, 1000)
     }else if (user.success === true) {
       setIsAuth(true)
