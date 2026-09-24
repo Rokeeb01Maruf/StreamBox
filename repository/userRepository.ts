@@ -99,3 +99,33 @@ export const signOutUser =  () => {
     localStorage.removeItem("streambox_current_user")
     return true
 }
+
+export const getWatchHistory = async(userId :string) => {
+    const data = await db.watchHistory.where("userId").equals(userId).toArray()
+    return data
+}
+
+export const addToWatchHistory = async(movieId :number) => {
+    const user = await getCurrentUser()
+    if(user.success === true && user.data.id){
+        try{
+            await db.watchHistory
+            .where("[userId+movieId]")
+            .equals([user.data.id, movieId])
+            .modify({watchedAt: Date.now()})
+        }catch(err){
+            await db.watchHistory
+            .add({
+                id: crypto.randomUUID(),
+                userId: user.data.id,
+                movieId: movieId,
+                watchedAt: Date.now()
+            })
+        }
+        return({
+            success: true,
+            message: "added to watch history"
+        })
+    }
+    return
+}

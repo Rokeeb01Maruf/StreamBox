@@ -1,4 +1,5 @@
 import type { MovieFullDetailsType } from "../utils/type"
+import { addToWatchHistory } from "../repository/userRepository"
 import { useState } from "react"
 import MovieCard from "./movieCard"
 export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType | null }) {
@@ -8,7 +9,10 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
     const trailer = data?.videos?.results.find((video)=> video.type == "Trailer" && video.site == "YouTube")
     const trailerUrl = trailer ? `https://www.youtube.com/embed/${trailer.key}` : null
 
-    const handleVideo = () => {
+    const handleVideo = async() => {
+        if (data?.movie?.id){
+            await addToWatchHistory(data.movie.id)
+        }
         setVidMode(true)
     }
 

@@ -177,7 +177,7 @@ function Home() {
               <li className="cursor-pointer">
                 {
                   isAuth === false ? (
-                    <button onClick={() => setState(2)} className="text-text-color font-montserat">Signin</button>
+                    <button onClick={() =>{ setState(2); window.scrollTo({top: 0, behavior: "smooth"})}} className="text-text-color font-montserat">Signin</button>
                   ) : (
                     <Link className="text-text-color font-montserat" to={"/history"}>Watch history</Link>
                   )
@@ -202,7 +202,7 @@ function Home() {
               <li>
                 {
                   isAuth === false ? (
-                    <button onClick={() => setState(1)} className="text-text-color font-montserat">SignUp</button>
+                    <button onClick={() =>{setState(1); window.scrollTo({top: 0, behavior: "smooth"})}} className="text-text-color font-montserat">SignUp</button>
                   ) : (
                     <button onClick={()=>setDetail(!detail)} className="bg-primary px-3 py-0.5 text-lg text-white font-bold font-inter rounded-full">{user?.nickname[0]}</button>
                   )

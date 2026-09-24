@@ -1,5 +1,5 @@
 export type movieCardType = {
-    id : string,
+    id : number,
     title : string,
     poster_path: string,
     release_date: string,
@@ -149,4 +149,11 @@ export interface MovieSearchResponse {
     results: MovieDetailsType[];
     total_pages: number;
     total_results: number;
+}
+
+export interface WatchHistory {
+    id: string,
+    userId: string,
+    movieId: number,
+    watchedAt: number
 }
