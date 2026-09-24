@@ -177,7 +177,7 @@ export default function MovieDetailsCard({ data }: { data: MovieFullDetailsType 
                                 src={trailerUrl}
                                 title={trailer?.name}
                                 allowFullScreen
-                                className="w-full h-[calc(100vh-70px)] aspect-video rounded-lg"
+                                className="w-full aspect-video rounded-lg"
                                 ></iframe>
                             )
                         }
