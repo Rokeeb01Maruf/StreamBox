@@ -20,6 +20,8 @@ function Home() {
   const [register, setRegister] = useState(false)
   const [isAuth, setIsAuth] = useState(false)
   const [submit, setSubmit] = useState(false)
+  const [nav, setNav] = useState(false)
+  // const [show, setShow] = useState(true)
   const [data, setData] = useState<MovieDetailsType[] | null>()
   const [authErr, setAuthErr] = useState(
     { signin: "", signup: "" }
@@ -146,20 +148,18 @@ function Home() {
     }
   }
   useEffect(()=>{
-    if (query.length >= 3){
       handleSearch()
-    }
   },[query])
 
   return (
     <>
       <BrowserRouter>
         <div className="relative min-h-screen mb-[0.5px] pb-5 font-montserat overflow-x-hidden w-screen bg-neutral items-center z-0 flex flex-col">
-          <header className="flex fixed w-full top-0 bg-[rgba(0,0,0,0.5)] z-1000 justify-between items-center h-17.5 px-25">
+          <header className="flex max-[783px]:relative fixed w-full top-0 bg-[rgba(0,0,0,0.5)] z-1000 justify-between items-center h-17.5 px-25 max-[1003px]:px-20 max-[939px]:px-15 max-[895px]:px-10">
             <img src="/assets/images/StreamBox.svg" alt="StreamBox Logo" />
             {
               detail && (
-                <div className="text-neutral flex flex-col text-xs gap-y-1 rounded-b-2xl absolute rounded-lg top-17.5 right-20 bg-text-color">
+                <div className="text-neutral max-[555px]:z-5000000 flex flex-col text-xs gap-y-1 rounded-b-2xl absolute rounded-lg top-17.5 right-20 bg-text-color">
                   <p className="mt-2.5 mx-2.5"><b>Nickname: </b> {user?.nickname}</p>
                   <p className="mx-2.5"><b>Email: </b> {user?.email}</p>
                   <button onClick={handleSignout} className="bg-primary cursor-pointer transition-all duration-300 text-white rounded-full py-1 hover:bg-primary/20">Signout</button>
@@ -167,7 +167,7 @@ function Home() {
               )
             }
 
-            <nav className="flex list-none items-center gap-x-10">
+            <nav className={`flex max-[555px]:${!nav ? "hidden" : "flex"} max-[556px]:flex max-[555px]:absolute max-[555px]:bottom-[-200%] max-[555px]:bg-[rgba(0,0,0,0.5)] max-[555px]:w-screen max-[555px]:left-0 max-[555px]:px-10  max-[555px]:items-start max-[555px]:gap-y-2 max-[555px]:flex-col list-none items-center gap-x-10 max-[875px]:gap-x-5`}>
               <li className="cursor-pointer">
                 <a href="/" className="text-text-color font-montserat">Home</a>
               </li>
@@ -183,11 +183,11 @@ function Home() {
                   )
                 }
               </li>
-              <li className={`${search ? 'opacity-100' : 'opacity-0 cursor-default'} h-5 ${data != null && "absolute" } relative w-49`}>
+              <li className={`${search ? 'opacity-100' : 'opacity-0 cursor-default'} max-[783px]:absolute max-[783px]:bottom-[-30%] max-[783px]:left[50%] max-[783px]:w-[calc(100vw-100px)] max-[783px]:translate-x-[8%] max-[783px]:left-0 h-5 max-[783px]:h-7 ${data != null && "absolute" } relative w-49`}>
                 <img onClick={handleSearch} src="/assets/icons/search.svg" className="absolute z-10000000 top-2 right-1.5" width={12} height={12} alt="" />
                 <input onChange={(e :React.ChangeEvent<HTMLInputElement>)=>{
                   setQuery(e.target.value)
-                }} placeholder="Search..." className="border rounded-xl text-white placeholder:text-xs px-1 text-sm w-full border-text-color font-montserat" type="text" name="" id="search" />
+                }} placeholder="Search..." className="border h-full rounded-xl text-white placeholder:text-xs px-1 text-sm w-full border-text-color font-montserat" type="text" name="" id="search" />
                 <div className="flex scrollbar-track-text-color scrollbar-thumb-neutral flex-col gap-y-1.5 max-h-[80vh] overflow-y-scroll relative text-[12px] font-inter bottom-0 left-0 bg-text-color z-100000">
                   {
                     data && data.map((e, index)=>(
@@ -209,8 +209,24 @@ function Home() {
                 }
               </li>
             </nav>
+            <img onClick={()=>{
+              setNav(!nav)
+              }} className="hidden max-[555px]:flex" src={!nav ? "/assets/icons/menu-white.svg" : "/assets/icons/close-white.svg"} alt="" />
           </header>
           <img src="/assets/images/hero-section.png" className="max-w-full absolute z-5 top-0 left-0 brightness-25" alt="" />
+          <label htmlFor="search" className="z-10 w-screen px-10 hidden max-[555px]:block">
+            <input onChange={(e :React.ChangeEvent<HTMLInputElement>)=>{
+                  setQuery(e.target.value)}}
+                  className="w-full border text-white text-xs px-2 border-text-color rounded-lg h-6"
+                  type="search" id="search" placeholder="search..."/>
+            <div className="flex scrollbar-track-text-color scrollbar-thumb-neutral flex-col gap-y-1.5 max-h-[80vh] overflow-y-scroll relative text-[12px] font-inter bottom-0 left-0 bg-text-color z-100000">
+            {
+              data && data.map((e, index)=>(
+                <Link key={index} to={`/movie/${e.id}`}>{e.title}</Link>
+              ))
+            }
+          </div>
+          </label>
           {
             state == 1 && (
               <div className="absolute flex items-center justify-center w-screen h-screen top-0 left-0 z-900000 bg-[rgba(0,0,0,0.7)]">

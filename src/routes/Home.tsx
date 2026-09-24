@@ -5,10 +5,10 @@ import { Link } from "react-router-dom"
 export default function home() {
     const { trending, popular, nowPlaying, topRated, upcoming, loading, error } = useHomeMovies()
     return (
-        <main className="w-full mt-17.5 flex flex-col text-lg z-10 text-white ">
-            <section className="text-center w-200 mx-auto mt-40 mb-15 px-25">
+        <main className="w-full mt-17.5 flex flex-col text-lg z-10 text-white max-[1198px]:mt-15 max-[1116px]:mt-10 max-[1020px]:mt-7.5 max-[938px]:mt-5 max-[879px]:mt-2.5 max-[818px]:mt-0">
+            <section className="max-w-screen text-center w-200 mx-auto mt-40 mb-15 px-25 max-[664px]:px-10 max-[782px]:mt-15 max-[664px]:mt-5 max-[755px]:w-[clamp(80%, 70%, 400px)] max-[755px]:flex max-[755px]:flex-col">
                 <h2 className="font-semibold text-xl">The Best Streaming Experience</h2>
-                <p className="text-xs mt-4 leading-relaxed">StreamVibe is the best streaming experience for watching your favorite movies and shows on demand, anytime, anywhere. With StreamVibe, you can enjoy a wide variety of content, including the latest blockbusters, classic movies, popular TV shows, and more. You can also create your own watchlists, so you can easily find the content you want to watch.</p>
+                <p className="max-[555px]:hidden text-xs mt-4 leading-relaxed">StreamVibe is the best streaming experience for watching your favorite movies and shows on demand, anytime, anywhere. With StreamVibe, you can enjoy a wide variety of content, including the latest blockbusters, classic movies, popular TV shows, and more. You can also create your own watchlists, so you can easily find the content you want to watch.</p>
                 <Link to={"/discover"} className="mt-5 bg-primary p-2 rounded-full w-fit flex mx-auto font-light text-xs items-center leading-0">
                     <img className="w-4 h-4" src="/assets/icons/play.svg" alt="" />
                     <p className="">Start Streaming</p>

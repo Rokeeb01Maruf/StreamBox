@@ -84,7 +84,7 @@ export default function Dashboard() {
                                             }
                                         </h2>
 
-                                        <div className="card grid grid-cols-6 gap-x-5 gap-y-5">
+                                        <div className="card grid grid-cols-6 max-[1065px]:grid-cols-5 max-[901px]:grid-cols-4 max-[705px]:grid-cols-3 max-[705px]:justify-between max-[705px]:gap-y-0 max-[561px]:grid-cols-2 max-[373px]:grid-cols-1 gap-x-5 gap-y-5">
                                             {
                                                 movieHistory
                                                     .filter((e) => {
